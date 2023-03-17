@@ -28,6 +28,7 @@ form.addEventListener('submit', function (e) {
   }
 });
 
+//createPromise функція
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
