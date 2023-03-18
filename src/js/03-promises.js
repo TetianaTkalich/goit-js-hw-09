@@ -9,12 +9,12 @@ const form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const delay = Number(inputDelay.value);
+  let delay = Number(inputDelay.value);
   const step = Number(inputStep.value);
   const amount = Number(inputAmount.value);
 
-  for (let i = 0; i < amount; i++) {
-    createPromise(delay, step)
+  for (let i = 1; i <= amount; i++) {
+    createPromise(i, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
           `✅ Fulfilled promise ${position} in ${delay}ms`
@@ -25,17 +25,19 @@ form.addEventListener('submit', function (e) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
+    delay += step;
   }
 });
 
-//createPromise функція
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve({ position, delay });
-    } else {
-      reject({ position, delay });
-    }
-  }, delay);
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
+  });
 }
